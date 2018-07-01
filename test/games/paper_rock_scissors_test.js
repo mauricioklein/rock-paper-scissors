@@ -1,5 +1,5 @@
 const chai = require('chai')
-const PaperRockScissors = require('../src/paper_rock_scissors')
+const PaperRockScissors = require('../../src/games/paper_rock_scissors')
 
 const { expect } = chai;
 

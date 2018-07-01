@@ -1,5 +1,5 @@
 const chai = require('chai')
-const Game = require('../src/game')
+const Game = require('../../src/games/game')
 
 const { expect } = chai;
 
