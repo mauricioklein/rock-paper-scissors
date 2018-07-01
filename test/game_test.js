@@ -4,11 +4,49 @@ const Game = require('../src/game')
 const { expect } = chai;
 
 describe('Game', () => {
-  describe('#getOptions', () => {
-    const game = new Game({ a: "b", c: "d" })
+  const winningRules = {
+    a: ["b"],
+    b: ["c"],
+    c: ["a", "d"],
+    d: []
+  }
+  const game = new Game(winningRules)
 
+  describe('#getOptions', () => {
     it('should return all possible options', () => {
       expect(game.getOptions()).to.deep.equal([ "a", "b", "c", "d" ])
+    })
+  })
+
+  describe('#calculateWinner', () => {
+    it('a must win of b', () => {
+      expect(game.calculateWinner('a', 'b')).to.equal(-1)
+      expect(game.calculateWinner('b', 'a')).to.equal(1)
+    })
+
+    it('b must win of c', () => {
+      expect(game.calculateWinner('b', 'c')).to.equal(-1)
+      expect(game.calculateWinner('c', 'b')).to.equal(1)
+    })
+
+    it('c must win of a and d', () => {
+      expect(game.calculateWinner('c', 'a')).to.equal(-1)
+      expect(game.calculateWinner('c', 'd')).to.equal(-1)
+      expect(game.calculateWinner('a', 'c')).to.equal(1)
+      expect(game.calculateWinner('d', 'c')).to.equal(1)
+    })
+
+    it('d must lose for everybody', () => {
+      expect(game.calculateWinner('d', 'a')).to.equal(1)
+      expect(game.calculateWinner('d', 'b')).to.equal(1)
+      expect(game.calculateWinner('d', 'c')).to.equal(1)
+    })
+
+    it('equal choises must raise a draw', () => {
+      expect(game.calculateWinner('a', 'a')).to.equal(0)
+      expect(game.calculateWinner('b', 'b')).to.equal(0)
+      expect(game.calculateWinner('c', 'c')).to.equal(0)
+      expect(game.calculateWinner('d', 'd')).to.equal(0)
     })
   })
 })

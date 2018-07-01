@@ -1,18 +1,21 @@
 "use strict"
 
 class Game {
-  constructor(rules) {
-    this.rules = rules
+  constructor(winningRules) {
+    this.winningRules = winningRules
   }
 
   getOptions() {
-    const keys = Object.keys(this.rules);
-    const values = keys.map(key => this.rules[key])
-    return [
-      ...(
-        new Set([...keys, ...values])
-      )
-    ].sort()
+    return Object.keys(this.winningRules);
+  }
+
+  calculateWinner(p1Choice, p2Choice) {
+    if(p1Choice === p2Choice) {
+      return 0
+    }
+
+    const p1WinningRules = this.winningRules[p1Choice]
+    return p1WinningRules.includes(p2Choice) ? -1 : 1
   }
 }
 
