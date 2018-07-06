@@ -1,6 +1,6 @@
 "use strict"
 
-const PaperRockScissors = require('../games/paper_rock_scissors')
+const GameFactory = require('../games/factory')
 
 class Game {
   constructor(algorithm, p1Choice, p2Choice) {
@@ -8,18 +8,24 @@ class Game {
     this.p1Choice = p1Choice
     this.p2Choice = p2Choice
 
-    this.game = this._instantiateGame(algorithm)
+    this._calculate()
   }
 
-  result() {
-    const { game, algorithm, p1Choice, p2Choice } = this
+  _calculate() {
+    const { algorithm, p1Choice, p2Choice } = this
 
-    if(game === undefined) {
-      return this._error(`${algorithm} isn't a valid game type`)
+    this.result = null
+    this.error = null
+
+    const game = GameFactory.create(algorithm)
+
+    if(game === null) {
+      this.error = this._error(`${algorithm} isn't a valid game type`)
+      return
     }
 
-    const result = game.calculateWinner(p1Choice, p2Choice)
-    return this._success(p1Choice, p2Choice, this._winner(result))
+    const res = game.calculateWinner(p1Choice, p2Choice)
+    this.result = this._success(p1Choice, p2Choice, this._winner(res))
   }
 
   _winner(result) {
@@ -44,17 +50,6 @@ class Game {
   _error(description) {
     return {
       error: description
-    }
-  }
-
-
-  _instantiateGame(algorithm) {
-    switch(algorithm) {
-      case 'paper_rock_scissors':
-        return new PaperRockScissors()
-
-      default:
-        return undefined
     }
   }
 }
