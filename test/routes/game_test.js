@@ -62,4 +62,42 @@ describe('/games/:algorithm', () => {
         }, done)
     })
   })
+
+  describe('with missing player choice', () => {
+    const options = [ "paper", "rock", "scissors" ]
+
+    describe('and missing choice is from player 1', () => {
+      it('should return a random option for player 1', (done) => {
+        request(app)
+          .post('/game/paper-rock-scissors')
+          .set('Content-Type', 'application/json')
+          .send({p1_choice: null, p2_choice: "rock"})
+          .expect(200)
+          .expect((response) => {
+            const { player_1_choice, player_2_choice } = response.body
+
+            expect(options).to.include(player_1_choice)
+            expect(player_2_choice).to.equal("rock")
+          })
+          .end(done)
+      })
+    })
+
+    describe('and missing choice is from player 2', () => {
+      it('should return a random option for player 2', (done) => {
+        request(app)
+          .post('/game/paper-rock-scissors')
+          .set('Content-Type', 'application/json')
+          .send({p1_choice: "rock", p2_choice: null})
+          .expect(200)
+          .expect((response) => {
+            const { player_1_choice, player_2_choice } = response.body
+
+            expect(player_1_choice).to.equal("rock")
+            expect(options).to.include(player_2_choice)
+          })
+          .end(done)
+      })
+    })
+  })
 })
