@@ -16,7 +16,7 @@ describe('/games/:algorithm', () => {
   describe('with valid game type', () => {
     it('should return valid response for player 1 winner', (done) => {
       request(app)
-        .post('/game/paper_rock_scissors')
+        .post('/game/paper-rock-scissors')
         .set('Content-Type', 'application/json')
         .send({p1_choice: "paper", p2_choice: "rock"})
         .expect(200, {
@@ -28,7 +28,7 @@ describe('/games/:algorithm', () => {
 
     it('should return valid response for player 2 winner', (done) => {
       request(app)
-        .post('/game/paper_rock_scissors')
+        .post('/game/paper-rock-scissors')
         .set('Content-Type', 'application/json')
         .send({p1_choice: "rock", p2_choice: "paper"})
         .expect(200, {
@@ -40,7 +40,7 @@ describe('/games/:algorithm', () => {
 
     it('should return valid response for draw', (done) => {
       request(app)
-        .post('/game/paper_rock_scissors')
+        .post('/game/paper-rock-scissors')
         .set('Content-Type', 'application/json')
         .send({p1_choice: "rock", p2_choice: "rock"})
         .expect(200, {
@@ -60,6 +60,6 @@ describe('/games/:algorithm', () => {
         .expect(200, {
           error: "foobar isn't a valid game type"
         }, done)
-    })    
+    })
   })
 })
