@@ -5,10 +5,11 @@ const { expect } = chai;
 
 describe('PaperRockScissors', () => {
   const game = new PaperRockScissors()
+  const options = [ "paper", "rock", "scissors" ]
 
   describe('#getOptions', () => {
     it('should return all possible options', () => {
-      expect(game.getOptions()).to.deep.equal([ "paper", "rock", "scissors" ])
+      expect(game.getOptions()).to.deep.equal(options)
     })
   })
 
@@ -32,6 +33,12 @@ describe('PaperRockScissors', () => {
       expect(game.calculateWinner('paper', 'paper')).to.equal(0)
       expect(game.calculateWinner('rock', 'rock')).to.equal(0)
       expect(game.calculateWinner('scissors', 'scissors')).to.equal(0)
+    })
+  })
+
+  describe('#randomChoice', () => {
+    it('should return a valid option', () => {
+      expect(options).to.include(game.randomChoice())
     })
   })
 })

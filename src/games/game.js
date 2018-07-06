@@ -17,6 +17,13 @@ class Game {
     const p1WinningRules = this.winningRules[p1Choice]
     return p1WinningRules.includes(p2Choice) ? -1 : 1
   }
+
+  randomChoice() {
+    const options = this.getOptions()
+    const randomIndex = Math.floor(Math.random() * options.length)
+
+    return options[randomIndex]
+  }
 }
 
 module.exports = Game;

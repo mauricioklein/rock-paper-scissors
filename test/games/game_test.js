@@ -11,10 +11,11 @@ describe('Game', () => {
     d: []
   }
   const game = new Game(winningRules)
+  const options = [ "a", "b", "c", "d" ]
 
   describe('#getOptions', () => {
     it('should return all possible options', () => {
-      expect(game.getOptions()).to.deep.equal([ "a", "b", "c", "d" ])
+      expect(game.getOptions()).to.deep.equal(options)
     })
   })
 
@@ -47,6 +48,12 @@ describe('Game', () => {
       expect(game.calculateWinner('b', 'b')).to.equal(0)
       expect(game.calculateWinner('c', 'c')).to.equal(0)
       expect(game.calculateWinner('d', 'd')).to.equal(0)
+    })
+  })
+
+  describe('#randomChoice', () => {
+    it('should return a valid option', () => {
+      expect(options).to.include(game.randomChoice())
     })
   })
 })
