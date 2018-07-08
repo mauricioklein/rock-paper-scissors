@@ -3,6 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "prestart": "make minify",
+    "test": "mocha test/**/*.js",
     "start": "node ./bin/www"
   },
   "dependencies": {
