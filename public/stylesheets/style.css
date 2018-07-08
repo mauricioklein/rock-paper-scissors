@@ -1,6 +1,7 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #BCEDF6;
 }
 
 a {
@@ -9,4 +10,41 @@ a {
 
 .hidden {
   display: none;
+}
+
+.split {
+  height: 100%;
+  width: 50%;
+  position: fixed;
+  overflow-x: hidden;
+  margin: 40px;
+}
+
+.scorebox {
+  background-color: #efefef;
+  padding: 50px 0 50px 0;
+  border: 2px;
+  border-radius: 10px;
+}
+
+.center {
+  text-align: center;
+}
+
+.left {
+  left: 0;
+}
+
+.right {
+  right: 0;
+}
+
+.option {
+  margin: 5px;
+}
+
+button#newGame {
+  padding: 20px;
+  border-radius: 20px;
+  background-color: green;
 }

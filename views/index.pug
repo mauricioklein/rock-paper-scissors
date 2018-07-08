@@ -7,13 +7,18 @@ block content
   input(id="gameType" value=game.type() type="hidden")
 
   //- User choices section
-  div#optionsBar
+  div#optionsBar.split.left.center
     each gameOption in game.getOptions()
-      button(id=`gameOption-${gameOption}`, value=gameOption) #{gameOption}
+      img.option(
+        id=`gameOption-${gameOption}`, 
+        src=`/images/game-options/${gameOption}.png`
+        value=gameOption
+      )
 
   //- Game result section
-  div#result(class="hidden")
-    p#player-1-choice
-    p#player-2-choice
-    p#winner
-    button(id="newGame") New Game
+  div#result.split.right.center.hidden
+    div.scorebox
+      p#player-1-choice
+      p#player-2-choice
+      p#winner
+      button#newGame New Game

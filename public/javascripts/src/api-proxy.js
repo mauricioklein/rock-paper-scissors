@@ -1,5 +1,5 @@
-((win) => {
-  win.ApiProxy = {
+((exports) => {
+  exports.ApiProxy = {
     call: (gameType, p1Choice, p2Choice) => {
       const body = {
         p1_choice: p1Choice,
