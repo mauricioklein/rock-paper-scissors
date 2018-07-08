@@ -2,23 +2,28 @@ extends layout
 
 block content
   h1 #{game.type()}
-  p Welcome to #{game.type()} game
+  h3 Welcome to #{game.type()} game
 
   input(id="gameType" value=game.type() type="hidden")
 
-  //- User choices section
-  div#optionsBar.split.left.center
-    each gameOption in game.getOptions()
-      img.option(
-        id=`gameOption-${gameOption}`, 
-        src=`/images/game-options/${gameOption}.png`
-        value=gameOption
-      )
+  div.row
+    //- User choices section
+    div#p1-container.column.center
+      each gameOption in game.getOptions()
+        input.option(
+          type="image"
+          id=`gameOption-${gameOption}`, 
+          src=`/images/game-options/${gameOption}.png`
+          value=gameOption
+        )
 
-  //- Game result section
-  div#result.split.right.center.hidden
-    div.scorebox
-      p#player-1-choice
-      p#player-2-choice
-      p#winner
-      button#newGame New Game
+    //- Game result section
+    div#p2-container.column.center.hidden
+      img#choice(src="/images/game-options/rock.png")
+  
+  div#result.hidden
+    div.row
+      p#winner.bold.report
+      
+    div.row
+      button#new-game.bt.report New Game
