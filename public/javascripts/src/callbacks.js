@@ -1,3 +1,5 @@
+/* eslint semi: 0 */
+
 (() => {
   const gameType = $("#gameType").val()
   const dom = {
@@ -59,6 +61,7 @@
   // Options callback
   $("[id^=gameOption-]").on("click", (ev) => {
     callApi(ev.target.value)
+      .then(resp => resp.json())
       .then(data => showResult(data))
   })
 
@@ -66,4 +69,4 @@
   dom.newGame.on("click", () => {
     startNewGame()
   })
-})()
+})();

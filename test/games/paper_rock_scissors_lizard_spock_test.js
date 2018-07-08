@@ -49,7 +49,7 @@ describe("PaperRockScissorsLizardSpock", () => {
       expect(game.calculateWinner("scissors", "spock")).to.equal(1)
     })
 
-    it("equal choises must raise a draw", () => {
+    it("equal choices must raise a draw", () => {
       expect(game.calculateWinner("paper", "paper")).to.equal(0)
       expect(game.calculateWinner("rock", "rock")).to.equal(0)
       expect(game.calculateWinner("scissors", "scissors")).to.equal(0)

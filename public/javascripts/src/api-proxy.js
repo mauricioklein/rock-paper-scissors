@@ -1,3 +1,5 @@
+/* eslint semi: 0 */
+
 ((exports) => {
   exports.ApiProxy = {
     call: (gameType, p1Choice, p2Choice) => {
@@ -11,7 +13,6 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body)
       })
-        .then(resp => resp.json())
     }
   }
-})(window)
+})(window);
