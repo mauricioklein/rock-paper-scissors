@@ -1,13 +1,13 @@
 "use strict"
 
-const Game = require('./game')
+const Game = require("./game")
 
 class PaperRockScissors extends Game {
   constructor() {
     const winningRules = {
-      'paper': ['rock'],
-      'rock': ['scissors'],
-      'scissors': ['paper']
+      "paper": ["rock"],
+      "rock": ["scissors"],
+      "scissors": ["paper"]
     }
 
     super(winningRules)
@@ -16,4 +16,4 @@ class PaperRockScissors extends Game {
   type() { return "paper-rock-scissors" }
 }
 
-module.exports = PaperRockScissors;
+module.exports = PaperRockScissors

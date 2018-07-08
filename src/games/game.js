@@ -8,7 +8,7 @@ class Game {
   type() { return null }
 
   getOptions() {
-    return Object.keys(this.winningRules);
+    return Object.keys(this.winningRules)
   }
 
   calculateWinner(p1Choice, p2Choice) {
@@ -28,4 +28,4 @@ class Game {
   }
 }
 
-module.exports = Game;
+module.exports = Game

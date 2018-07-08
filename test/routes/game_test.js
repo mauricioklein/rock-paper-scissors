@@ -1,38 +1,40 @@
-const request = require('supertest')
-const express = require('express')
-const bodyParser = require('body-parser');
+const request = require("supertest")
+const express = require("express")
+const bodyParser = require("body-parser")
 
-const chai = require('chai')
-const gameRoutes = require('../../src/routes/game')
+const chai = require("chai")
+const gameRoutes = require("../../src/routes/game")
 
-const { expect } = chai;
+const { expect } = chai
 
-describe('/', () => {
+const setupApp = () => {
   const app = express()
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({ extended: true }))
-  const router = gameRoutes(app)
+  gameRoutes(app)
+  return app
+}
 
-  it('should redirect to paper-rock-scissors game', (done) => {
+describe("/", () => {
+  const app = setupApp()
+
+  it("should redirect to paper-rock-scissors game", (done) => {
     request(app)
-      .get('/')
+      .get("/")
       .expect(302)
-      .expect('Location', '/game/paper-rock-scissors')
+      .expect("Location", "/game/paper-rock-scissors")
       .end(done)
   })
 })
 
-describe('/games/:algorithm', () => {
-  const app = express()
-  app.use(bodyParser.json())
-  app.use(bodyParser.urlencoded({ extended: true }))
-  const router = gameRoutes(app)
+describe("/games/:algorithm", () => {
+  const app = setupApp()
 
-  describe('with valid game type', () => {
-    it('should return valid response for player 1 winner', (done) => {
+  describe("with valid game type", () => {
+    it("should return valid response for player 1 winner", (done) => {
       request(app)
-        .post('/game/paper-rock-scissors')
-        .set('Content-Type', 'application/json')
+        .post("/game/paper-rock-scissors")
+        .set("Content-Type", "application/json")
         .send({p1_choice: "paper", p2_choice: "rock"})
         .expect(200, {
           player_1_choice: "paper",
@@ -41,10 +43,10 @@ describe('/games/:algorithm', () => {
         }, done)
     })
 
-    it('should return valid response for player 2 winner', (done) => {
+    it("should return valid response for player 2 winner", (done) => {
       request(app)
-        .post('/game/paper-rock-scissors')
-        .set('Content-Type', 'application/json')
+        .post("/game/paper-rock-scissors")
+        .set("Content-Type", "application/json")
         .send({p1_choice: "rock", p2_choice: "paper"})
         .expect(200, {
           player_1_choice: "rock",
@@ -53,10 +55,10 @@ describe('/games/:algorithm', () => {
         }, done)
     })
 
-    it('should return valid response for draw', (done) => {
+    it("should return valid response for draw", (done) => {
       request(app)
-        .post('/game/paper-rock-scissors')
-        .set('Content-Type', 'application/json')
+        .post("/game/paper-rock-scissors")
+        .set("Content-Type", "application/json")
         .send({p1_choice: "rock", p2_choice: "rock"})
         .expect(200, {
           player_1_choice: "rock",
@@ -66,11 +68,11 @@ describe('/games/:algorithm', () => {
     })
   })
 
-  describe('with invalid game type', () => {
-    it('should return error if algorithm is unknown', (done) => {
+  describe("with invalid game type", () => {
+    it("should return error if algorithm is unknown", (done) => {
       request(app)
-        .post('/game/foobar')
-        .set('Content-Type', 'application/json')
+        .post("/game/foobar")
+        .set("Content-Type", "application/json")
         .send({p1_choice: "rock", p2_choice: "rock"})
         .expect(200, {
           error: "foobar isn't a valid game type"
@@ -78,14 +80,14 @@ describe('/games/:algorithm', () => {
     })
   })
 
-  describe('with missing player choice', () => {
+  describe("with missing player choice", () => {
     const options = [ "paper", "rock", "scissors" ]
 
-    describe('and missing choice is from player 1', () => {
-      it('should return a random option for player 1', (done) => {
+    describe("and missing choice is from player 1", () => {
+      it("should return a random option for player 1", (done) => {
         request(app)
-          .post('/game/paper-rock-scissors')
-          .set('Content-Type', 'application/json')
+          .post("/game/paper-rock-scissors")
+          .set("Content-Type", "application/json")
           .send({p1_choice: null, p2_choice: "rock"})
           .expect(200)
           .expect((response) => {
@@ -98,11 +100,11 @@ describe('/games/:algorithm', () => {
       })
     })
 
-    describe('and missing choice is from player 2', () => {
-      it('should return a random option for player 2', (done) => {
+    describe("and missing choice is from player 2", () => {
+      it("should return a random option for player 2", (done) => {
         request(app)
-          .post('/game/paper-rock-scissors')
-          .set('Content-Type', 'application/json')
+          .post("/game/paper-rock-scissors")
+          .set("Content-Type", "application/json")
           .send({p1_choice: "rock", p2_choice: null})
           .expect(200)
           .expect((response) => {
