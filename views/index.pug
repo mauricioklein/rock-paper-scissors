@@ -1,5 +1,19 @@
 extends layout
 
 block content
-  h1 Rock-paper-scissors
-  p Welcome to Rock-paper-scissors game
+  h1 #{game.type()}
+  p Welcome to #{game.type()} game
+
+  input(id="gameType" value=game.type() type="hidden")
+
+  //- User choices section
+  div#optionsBar
+    each gameOption in game.getOptions()
+      button(id=`gameOption-${gameOption}`, value=gameOption) #{gameOption}
+
+  //- Game result section
+  div#result(class="hidden")
+    p#player-1-choice
+    p#player-2-choice
+    p#winner
+    button(id="newGame") New Game

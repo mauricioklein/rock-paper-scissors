@@ -9,9 +9,12 @@ const router = (app) => {
 
   route.post('/:algorithm', (req, res, next) => {
     const { algorithm } = req.params;
-    const { p1_choice, p2_choice } = req.body
-    const presenter = new GamePresenter(algorithm, p1_choice, p2_choice)
 
+    const game = GameFactory.create(algorithm)
+    const p1_choice = req.body.p1_choice || game.randomChoice()
+    const p2_choice = req.body.p2_choice || game.randomChoice()
+
+    const presenter = new GamePresenter(algorithm, p1_choice, p2_choice)
     const response = (presenter.result || presenter.error)
 
     res.setHeader('Content-Type', 'application/json')
