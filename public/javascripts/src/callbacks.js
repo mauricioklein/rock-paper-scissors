@@ -1,13 +1,13 @@
 (() => {
-  const gameType = $('#gameType').val()
+  const gameType = $("#gameType").val()
   const dom = {
     p2: {
-      container: $('#p2-container'),
-      choice: $('#p2-container > #choice')
+      container: $("#p2-container"),
+      choice: $("#p2-container > #choice")
     },
-    winner: $('#winner'),
-    result: $('#result'),
-    newGame: $('#new-game')
+    winner: $("#winner"),
+    result: $("#result"),
+    newGame: $("#new-game")
   }
 
   const imgPath = (imgName) => (
@@ -21,16 +21,16 @@
   const showResult = (data) => {
     presentSelectedOption(data.player_1_choice)
 
-    dom.p2.choice.attr('src', imgPath(data.player_2_choice))
+    dom.p2.choice.attr("src", imgPath(data.player_2_choice))
     dom.winner.text(winnerLine(data.winner))
-    dom.p2.container.removeClass('hidden')
-    dom.result.removeClass('hidden')
+    dom.p2.container.removeClass("hidden")
+    dom.result.removeClass("hidden")
   }
 
   const startNewGame = () => {
     presentAllOptions()
-    dom.p2.container.addClass('hidden')
-    dom.result.addClass('hidden')
+    dom.p2.container.addClass("hidden")
+    dom.result.addClass("hidden")
   }
 
   const winnerLine = (winner) => {
@@ -47,23 +47,23 @@
   }
 
   const presentSelectedOption = (selectedOption) => {
-     $('[id^=gameOption-]')
+    $("[id^=gameOption-]")
       .filter((_, el) => el.value !== selectedOption)
-      .addClass('hidden')
+      .addClass("hidden")
   }
 
   const presentAllOptions = () => {
-    $('[id^=gameOption-]').removeClass('hidden')
+    $("[id^=gameOption-]").removeClass("hidden")
   }
 
   // Options callback
-  $('[id^=gameOption-]').on('click', (ev) => {
+  $("[id^=gameOption-]").on("click", (ev) => {
     callApi(ev.target.value)
       .then(data => showResult(data))
   })
 
   // New game button callback
-  dom.newGame.on('click', () => {
+  dom.newGame.on("click", () => {
     startNewGame()
   })
-})();
+})()

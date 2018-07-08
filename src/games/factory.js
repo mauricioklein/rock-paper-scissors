@@ -1,7 +1,7 @@
 "use strict"
 
-const PaperRockScissors = require('./paper_rock_scissors');
-const PaperRockScissorsLizardSpock = require('./paper_rock_scissors_lizard_spock');
+const PaperRockScissors = require("./paper_rock_scissors")
+const PaperRockScissorsLizardSpock = require("./paper_rock_scissors_lizard_spock")
 
 class Factory {
   static create(klass){
@@ -17,4 +17,4 @@ class Factory {
   }
 }
 
-module.exports = Factory;
+module.exports = Factory

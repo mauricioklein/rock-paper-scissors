@@ -1,6 +1,6 @@
 "use strict"
 
-const GameFactory = require('../games/factory')
+const GameFactory = require("../games/factory")
 
 class Game {
   constructor(algorithm, p1Choice, p2Choice) {
@@ -54,4 +54,4 @@ class Game {
   }
 }
 
-module.exports = Game;
+module.exports = Game
