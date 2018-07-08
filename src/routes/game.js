@@ -5,6 +5,10 @@ const GamePresenter = require('../presenters/game');
 const router = (app) => {
   const route = express.Router()
 
+  // Accessing root redirects to the default game
+  // (paper-rock-scissors)
+  app.get('/', (_, res) => res.redirect('/game/paper-rock-scissors'))
+
   app.use('/game', route)
 
   route.post('/:algorithm', (req, res, next) => {
