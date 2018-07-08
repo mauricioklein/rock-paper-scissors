@@ -51,6 +51,12 @@ describe('Game', () => {
     })
   })
 
+  describe('#type', () => {
+    it('should return null', () => {
+      expect(game.type()).to.be.null
+    })
+  })
+
   describe('#randomChoice', () => {
     it('should return a valid option', () => {
       expect(options).to.include(game.randomChoice())

@@ -12,6 +12,8 @@ class PaperRockScissors extends Game {
 
     super(winningRules)
   }
+
+  type() { return "paper-rock-scissors" }
 }
 
 module.exports = PaperRockScissors;

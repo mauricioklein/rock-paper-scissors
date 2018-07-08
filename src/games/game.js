@@ -5,6 +5,8 @@ class Game {
     this.winningRules = winningRules
   }
 
+  type() { return null }
+
   getOptions() {
     return Object.keys(this.winningRules);
   }

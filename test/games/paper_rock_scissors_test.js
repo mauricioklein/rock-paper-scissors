@@ -36,6 +36,12 @@ describe('PaperRockScissors', () => {
     })
   })
 
+  describe('#type', () => {
+    it('should return "paper-rock-scissors"', () => {
+      expect(game.type()).to.equal("paper-rock-scissors")
+    })
+  })
+
   describe('#randomChoice', () => {
     it('should return a valid option', () => {
       expect(options).to.include(game.randomChoice())
