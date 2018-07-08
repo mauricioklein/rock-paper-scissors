@@ -7,6 +7,21 @@ const gameRoutes = require('../../src/routes/game')
 
 const { expect } = chai;
 
+describe('/', () => {
+  const app = express()
+  app.use(bodyParser.json())
+  app.use(bodyParser.urlencoded({ extended: true }))
+  const router = gameRoutes(app)
+
+  it('should redirect to paper-rock-scissors game', (done) => {
+    request(app)
+      .get('/')
+      .expect(302)
+      .expect('Location', '/game/paper-rock-scissors')
+      .end(done)
+  })
+})
+
 describe('/games/:algorithm', () => {
   const app = express()
   app.use(bodyParser.json())
