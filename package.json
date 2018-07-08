@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "prestart": "make minify",
+    "lint": "eslint --ignore-pattern '*.min.js' .",
     "test": "mocha test/**/*.js",
     "start": "node ./bin/www"
   },
