@@ -1,18 +1,16 @@
-/* eslint semi: 0 */
+const ApiProxy = function() {}
 
-((exports) => {
-  exports.ApiProxy = {
-    call: (gameType, p1Choice, p2Choice) => {
-      const body = {
-        p1_choice: p1Choice,
-        p2_choice: p2Choice
-      }
-
-      return fetch(`/game/${gameType}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body)
-      })
-    }
+ApiProxy.prototype.call = function(gameType, p1Choice = null, p2Choice = null) {
+  const body = {
+    p1_choice: p1Choice,
+    p2_choice: p2Choice
   }
-})(window);
+
+  return fetch(`/game/${gameType}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body)
+  })
+}
+
+module.exports = ApiProxy

@@ -11,7 +11,7 @@ block content
     
   div.row
     //- User choices section
-    div#p1-container.column.center
+    div#player1-container.column.center
       each gameOption in game.getOptions()
         input.option(
           type="image"
@@ -21,10 +21,10 @@ block content
         )
 
     //- Game result section
-    div#p2-container.column.center.hidden
+    div#player2-container.column.center.hidden
       img#choice(src="/images/game-options/rock.png")
   
-  div#result.hidden
+  div#result-container.hidden
     div.row
       p#winner.bold.report
       
