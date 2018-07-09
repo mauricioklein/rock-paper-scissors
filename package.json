@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "prestart": "make minify",
-    "lint": "eslint --ignore-pattern '*.min.js' --ignore-pattern 'coverage/**/*' .",
+    "lint": "eslint --ignore-pattern 'bundle.js' --ignore-pattern 'coverage/**/*' .",
     "test": "mocha test/**/*.js",
     "start": "node ./bin/www"
   },
@@ -15,10 +15,10 @@
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
     "morgan": "~1.9.0",
-    "node-minify": "^3.1.0",
     "pug": "2.0.0-beta11"
   },
   "devDependencies": {
+    "browserify": "^16.2.2",
     "chai": "^4.1.2",
     "eslint": "^5.0.1",
     "eslint-plugin-jasmine": "^2.10.1",
