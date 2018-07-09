@@ -1,4 +1,4 @@
-FROM node:9
+FROM node:6
 
 # Import the project into container's /app directory
 ADD . /app
