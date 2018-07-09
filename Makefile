@@ -1,8 +1,5 @@
-minify:
-	./node_modules/node-minify/bin/cli.js \
-		--compressor babel-minify \
-		--input 'public/javascripts/src/*.js' \
-		--output 'public/javascripts/app.min.js'
+minify: public/javascripts/src/app.js
+	browserify public/javascripts/src/app.js -o public/javascripts/bundle.js
 
 debug: app.js
 	DEBUG=rock-paper-scissors:* npm start
