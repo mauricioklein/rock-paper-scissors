@@ -11,28 +11,28 @@ const router = (app) => {
 
   app.use("/game", route)
 
-  route.post("/:algorithm", (req, res) => {
-    const { algorithm } = req.params
+  route.post("/:gameType", (req, res) => {
+    const { gameType } = req.params
 
-    const game = GameFactory.create(algorithm)
+    const game = GameFactory.create(gameType)
     const p1_choice = req.body.p1_choice || game.randomChoice()
     const p2_choice = req.body.p2_choice || game.randomChoice()
 
-    const presenter = new GamePresenter(algorithm, p1_choice, p2_choice)
+    const presenter = new GamePresenter(gameType, p1_choice, p2_choice)
     const response = (presenter.result || presenter.error)
 
     res.setHeader("Content-Type", "application/json")
     res.send(JSON.stringify(response))
   })
 
-  route.get("/:algorithm", (req, res) => {
-    const { algorithm } = req.params
-    const game = GameFactory.create(algorithm)
+  route.get("/:gameType", (req, res) => {
+    const { gameType } = req.params
+    const game = GameFactory.create(gameType)
 
     if(game == null) {
       res.render("error", { message: `${algorithm} isn't a valid game` })
     } else {
-      res.render("index", { algorithm: algorithm, game: game })
+      res.render("index", { game: game })
     }
   })
 }

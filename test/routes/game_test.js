@@ -28,7 +28,7 @@ describe("Routes", () => {
     })
   })
 
-  describe("POST /games/:algorithm", () => {
+  describe("POST /game/:algorithm", () => {
     const app = setupApp()
 
     describe("with valid game type", () => {
