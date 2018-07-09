@@ -13,23 +13,23 @@ A simple rock-paper-scissors game implemented in NodeJS
 
 The system supports two different game modes:
 
-- **paper-rock-scissors**: accessible via `http://[endpoint]/games/paper-rock-scissors`
-- **paper-rock-scissors-lizard-spock**: accessible via `http://[endpoint]/games/paper-rock-scissors-lizard-spock`
+- **paper-rock-scissors**: accessible via `http://[endpoint]/game/paper-rock-scissors`
+- **paper-rock-scissors-lizard-spock**: accessible via `http://[endpoint]/game/paper-rock-scissors-lizard-spock`
 
 To start the system, please refer to the [Up and Running section](#up-and-running).
 
 ## Technical decisions
 
-- **Business logic is stored in the backend**
+- **Business logic is stored in the backend:**
 This approach was used for security reasons (makes cheating harder), guarantees that all clients are running the same algorithm version and makes easy to extend the game to support `user vs user` game mode.
 
-- **Node app serves assets**
+- **Node app serves assets:**
 Node app is also responsible to serve the webpages and necessary assets. JS files that run in browser are minified using [Browserify](http://browserify.org/).
 
-- **Express is the only framework used**
+- **Express is the only framework used:**
 This is due project restrictions. Thus, UI is build entirely using jQuery + CSS. As a more professional and scalable solution, some kind of reactive interface could be build, using React, VueJS, etc. Also, TypeScript in the backend would be a great improvement.
 
-- **Travis as CI and Codecov as code coverage reporter**
+- **Travis as CI and Codecov as code coverage reporter:**
 The project is connected to Travis.org. So, every build generates a new build, running the specs and lints.
 Also, code coverage is calculated using [Istanbul](https://istanbul.js.org/) and result is reported to [Codecov.io](https://codecov.io/). Badges with the latest build status are available on this README header.
 
