@@ -30,7 +30,7 @@ const router = (app) => {
     const game = GameFactory.create(gameType)
 
     if(game == null) {
-      res.render("error", { message: `${algorithm} isn't a valid game` })
+      res.render("error", { message: `${gameType} isn't a valid game` })
     } else {
       res.render("index", { game: game })
     }

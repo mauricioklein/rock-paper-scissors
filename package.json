@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "prestart": "make minify",
-    "lint": "eslint --ignore-pattern 'bundle.js' --ignore-pattern 'coverage/**/*' .",
+    "lint": "eslint --ignore-pattern '*.min.js' --ignore-pattern 'coverage/**/*' .",
     "test": "mocha test/**/*.js",
     "start": "node ./bin/www"
   },
@@ -23,6 +23,7 @@
     "eslint": "^5.0.1",
     "eslint-plugin-jasmine": "^2.10.1",
     "mocha": "^5.2.0",
-    "supertest": "^3.1.0"
+    "supertest": "^3.1.0",
+    "uglify-es": "^3.3.9"
   }
 }
