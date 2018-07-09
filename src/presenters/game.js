@@ -1,6 +1,7 @@
 "use strict"
 
 const GameFactory = require("../games/factory")
+const Winner = require("../../src/games/winner")
 
 class Game {
   constructor(algorithm, p1Choice, p2Choice) {
@@ -24,19 +25,8 @@ class Game {
       return
     }
 
-    const res = game.calculateWinner(p1Choice, p2Choice)
-    this.result = this._success(p1Choice, p2Choice, this._winner(res))
-  }
-
-  _winner(result) {
-    switch(result) {
-      case -1:
-        return "Player 1"
-      case 1:
-        return "Player 2"
-      default:
-        return "Draw"
-    }
+    const winner = game.calculateWinner(p1Choice, p2Choice)
+    this.result = this._success(p1Choice, p2Choice, Winner.toString(winner))
   }
 
   _success(p1Choice, p2Choice, winner) {
