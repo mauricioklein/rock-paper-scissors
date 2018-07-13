@@ -1,6 +1,7 @@
 const express = require("express")
 const GameFactory = require("../games/factory")
 const GamePresenter = require("../presenters/game")
+const { notFoundAsJson, notFoundAsHtml } = require("./error_handler")
 
 const router = (app) => {
   const route = express.Router()
@@ -15,25 +16,26 @@ const router = (app) => {
     const { gameType } = req.params
 
     const game = GameFactory.create(gameType)
-    const p1_choice = req.body.p1_choice || game.randomChoice()
-    const p2_choice = req.body.p2_choice || game.randomChoice()
 
-    const presenter = new GamePresenter(gameType, p1_choice, p2_choice)
-    const response = (presenter.result || presenter.error)
+    if(game === null) { return notFoundAsJson(res, gameType) }
+
+    const p1Choice = req.body.p1_choice || game.randomChoice()
+    const p2Choice = req.body.p2_choice || game.randomChoice()
+
+    const presenter = new GamePresenter(gameType, p1Choice, p2Choice)
+    const response = (presenter.response || presenter.error)
 
     res.setHeader("Content-Type", "application/json")
-    res.send(JSON.stringify(response))
+    res.json(response)
   })
 
   route.get("/:gameType", (req, res) => {
     const { gameType } = req.params
     const game = GameFactory.create(gameType)
 
-    if(game == null) {
-      res.render("error", { message: `${gameType} isn't a valid game` })
-    } else {
-      res.render("index", { game: game })
-    }
+    if(game === null) { return notFoundAsHtml(res, gameType) }
+
+    res.render("index", { game: game })
   })
 }
 

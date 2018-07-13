@@ -1,3 +1,5 @@
+/* eslint camelcase: off */
+
 const request = require("supertest")
 const express = require("express")
 const bodyParser = require("body-parser")
@@ -70,14 +72,30 @@ describe("Routes", () => {
     })
 
     describe("with invalid game type", () => {
-      it("should return error", (done) => {
-        request(app)
-          .post("/game/foobar")
-          .set("Content-Type", "application/json")
-          .send({p1_choice: "rock", p2_choice: "rock"})
-          .expect(200, {
-            error: "foobar isn't a valid game type"
-          }, done)
+      const gameType = "foobar"
+
+      describe("and both player choices are provided", () => {
+        it("should return error", (done) => {
+          request(app)
+            .post(`/game/${gameType}`)
+            .set("Content-Type", "application/json")
+            .send({p1_choice: "rock", p2_choice: "rock"})
+            .expect(404, {
+              error: "foobar isn't a valid game"
+            }, done)
+        })
+      })
+
+      describe("and one of the player's choice is missing", () => {
+        it("should return error", (done) => {
+          request(app)
+            .post(`/game/${gameType}`)
+            .set("Content-Type", "application/json")
+            .send({p1_choice: "rock", p2_choice: null})
+            .expect(404, {
+              error: "foobar isn't a valid game"
+            }, done)
+        })
       })
     })
 

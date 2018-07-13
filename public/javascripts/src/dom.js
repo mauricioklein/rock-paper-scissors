@@ -1,57 +1,61 @@
 const Helper = require("./helper")
 
-const Dom = function() {
-  this.optionsSelector = $("[id^=gameOption-]")
-  this.player2 = {
-    container: $("#player2-container"),
-    choice: $("#player2-container > #choice")
+class Dom {
+  constructor() {
+    this.optionsSelector = $("[id^=gameOption-]")
+    this.player2 = {
+      container: $("#player2-container"),
+      choice: $("#player2-container > #choice")
+    }
+    this.result = {
+      container: $("#result-container"),
+      winner: $("#winner")
+    }
+    this.newGameButton = $("#new-game")
+    this.gameType = $("#gameType").val()
   }
-  this.result = {
-    container: $("#result-container"),
-    winner: $("#winner")
-  }
-  this.newGameButton = $("#new-game")
-  this.gameType = $("#gameType").val()
-}
 
-Dom.prototype = {
-  renderResult: function({ player_1_choice, player_2_choice, winner }) {
-    this.setPlayer1Choice(player_1_choice)
-    this.setPlayer2Choice(player_2_choice)
+  renderResult(data) {
+    const player1Choice = data.player_1_choice
+    const player2Choice = data.player_2_choice
+    const winner = data.winner
+
+    this.setPlayer1Choice(player1Choice)
+    this.setPlayer2Choice(player2Choice)
     this.setWinner(winner)
 
     this.showResult()
-  },
+  }
 
-  startNewGame: function() {
+  startNewGame() {
     this.hideResult()
     this.showOptions()
-  },
+  }
 
-  setPlayer1Choice: function(choice) {
+  setPlayer1Choice(choice) {
     this.optionsSelector
       .filter((_, el) => el.value !== choice)
       .addClass("hidden")
-  },
+  }
 
-  setPlayer2Choice: function(choice) {
+  setPlayer2Choice(choice) {
     this.player2.choice.attr("src", Helper.imgPath(choice))
-  },
+  }
 
-  showOptions: function() {
+  showOptions() {
     this.optionsSelector.removeClass("hidden")
-  },
+  }
 
-  setWinner: function(winner) {
+  setWinner(winner) {
     this.result.winner.text(Helper.winnerLine(winner))
-  },
+  }
 
-  showResult: function() {
+  showResult() {
     this.player2.container.removeClass("hidden")
     this.result.container.removeClass("hidden")
-  },
+  }
 
-  hideResult: function() {
+  hideResult() {
     this.player2.container.addClass("hidden")
     this.result.container.addClass("hidden")
   }

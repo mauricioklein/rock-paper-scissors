@@ -6,7 +6,10 @@
         "jquery": true,
         "es6": true
     },
-    "plugins": ["jasmine"],
+    "plugins": [
+      "jasmine",
+      "filenames"
+    ],
     "extends": "eslint:recommended",
     "parserOptions": {
         "ecmaVersion": 6
@@ -30,6 +33,10 @@
         "semi": [
             "error",
             "never"
-        ]
+        ],
+        "no-console": "off",
+        "camelcase": [2, { "properties": "always" }],
+        "filenames/match-regex": [2, "^[a-z_.]+$", true],
+        "filenames/no-index": 2
     }
 }

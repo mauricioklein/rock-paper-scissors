@@ -1,9 +1,9 @@
-const Helper = {
-  imgPath: (imgName) => (
-    `/images/game-options/${imgName}.png`
-  ),
-  
-  winnerLine: (winner) => {
+class Helper {
+  static imgPath(imgName) {
+    return `/images/game-options/${imgName}.png`
+  }
+
+  static winnerLine(winner) {
     switch(winner) {
       case "Player 1":
         return "You won!"

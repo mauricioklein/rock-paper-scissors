@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "prestart": "make minify",
+    "prestart": "browserify public/javascripts/src/app.js | uglifyjs -cm -o public/javascripts/bundle.min.js",
     "lint": "eslint --ignore-pattern '*.min.js' --ignore-pattern 'coverage/**/*' .",
     "test": "mocha test/**/*.js",
+    "debug": "DEBUG=rock-paper-scissors:* npm start",
     "start": "node ./bin/www"
   },
   "dependencies": {
@@ -21,6 +22,7 @@
     "browserify": "^16.2.2",
     "chai": "^4.1.2",
     "eslint": "^5.0.1",
+    "eslint-plugin-filenames": "^1.3.2",
     "eslint-plugin-jasmine": "^2.10.1",
     "mocha": "^5.2.0",
     "supertest": "^3.1.0",
