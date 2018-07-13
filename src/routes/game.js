@@ -23,7 +23,7 @@ const router = (app) => {
     const p2_choice = req.body.p2_choice || game.randomChoice()
 
     const presenter = new GamePresenter(gameType, p1_choice, p2_choice)
-    const response = (presenter.result || presenter.error)
+    const response = (presenter.response || presenter.error)
 
     res.setHeader("Content-Type", "application/json")
     res.send(JSON.stringify(response))
