@@ -26,7 +26,7 @@ const router = (app) => {
     const response = (presenter.response || presenter.error)
 
     res.setHeader("Content-Type", "application/json")
-    res.send(JSON.stringify(response))
+    res.json(response)
   })
 
   route.get("/:gameType", (req, res) => {
