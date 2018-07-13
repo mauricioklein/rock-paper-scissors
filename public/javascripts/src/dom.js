@@ -2,17 +2,17 @@ const Helper = require("./helper")
 
 class Dom {
   constructor() {
-    this.optionsSelector = $("[id^=gameOption-]")
+    this.optionsSelector = document.querySelectorAll("[id^=gameOption-]")
     this.player2 = {
-      container: $("#player2-container"),
-      choice: $("#player2-container > #choice")
+      container: document.querySelector("#player2-container"),
+      choice: document.querySelector("#player2-container > #choice")
     }
     this.result = {
-      container: $("#result-container"),
-      winner: $("#winner")
+      container: document.querySelector("#result-container"),
+      winner: document.querySelector("#winner")
     }
-    this.newGameButton = $("#new-game")
-    this.gameType = $("#gameType").val()
+    this.newGameButton = document.querySelector("#new-game")
+    this.gameType = document.querySelector("#gameType").value
   }
 
   renderResult(data) {
@@ -33,31 +33,32 @@ class Dom {
   }
 
   setPlayer1Choice(choice) {
-    this.optionsSelector
-      .filter((_, el) => el.value !== choice)
-      .addClass("hidden")
+    Array.prototype.filter
+      .call(this.optionsSelector, option => option.value !== choice)
+      .forEach(option => option.classList.add("hidden"))
   }
 
   setPlayer2Choice(choice) {
-    this.player2.choice.attr("src", Helper.imgPath(choice))
+    this.player2.choice.src = Helper.imgPath(choice)
   }
 
   showOptions() {
-    this.optionsSelector.removeClass("hidden")
+    this.optionsSelector
+      .forEach(option => option.classList.remove("hidden"))
   }
 
   setWinner(winner) {
-    this.result.winner.text(Helper.winnerLine(winner))
+    this.result.winner.innerText = Helper.winnerLine(winner)
   }
 
   showResult() {
-    this.player2.container.removeClass("hidden")
-    this.result.container.removeClass("hidden")
+    this.player2.container.classList.remove("hidden")
+    this.result.container.classList.remove("hidden")
   }
 
   hideResult() {
-    this.player2.container.addClass("hidden")
-    this.result.container.addClass("hidden")
+    this.player2.container.classList.add("hidden")
+    this.result.container.classList.add("hidden")
   }
 }
 
