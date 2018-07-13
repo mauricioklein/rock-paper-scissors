@@ -1,4 +1,4 @@
-const ApiProxy = require("./api-proxy")
+const ApiProxy = require("./api_proxy")
 const Dom = require("./dom")
 
 const dom = new Dom()

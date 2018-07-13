@@ -40,6 +40,7 @@ class Game {
   }
 
   _success(p1Choice, p2Choice, winner) {
+    /* eslint camelcase: off */
     return {
       player_1_choice: p1Choice,
       player_2_choice: p2Choice,

@@ -1,3 +1,5 @@
+/* eslint camelcase: off */
+
 const chai = require("chai")
 const GamePresenter = require("../../src/presenters/game")
 

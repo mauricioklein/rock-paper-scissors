@@ -1,5 +1,6 @@
 class ApiProxy {
   static call(gameType, p1Choice = null, p2Choice = null) {
+    /* eslint camelcase: off */
     const body = {
       p1_choice: p1Choice,
       p2_choice: p2Choice

@@ -19,10 +19,10 @@ const router = (app) => {
 
     if(game === null) { return notFoundAsJson(res, gameType) }
 
-    const p1_choice = req.body.p1_choice || game.randomChoice()
-    const p2_choice = req.body.p2_choice || game.randomChoice()
+    const p1Choice = req.body.p1_choice || game.randomChoice()
+    const p2Choice = req.body.p2_choice || game.randomChoice()
 
-    const presenter = new GamePresenter(gameType, p1_choice, p2_choice)
+    const presenter = new GamePresenter(gameType, p1Choice, p2Choice)
     const response = (presenter.response || presenter.error)
 
     res.setHeader("Content-Type", "application/json")

@@ -15,9 +15,13 @@ class Dom {
     this.gameType = $("#gameType").val()
   }
 
-  renderResult({ player_1_choice, player_2_choice, winner }) {
-    this.setPlayer1Choice(player_1_choice)
-    this.setPlayer2Choice(player_2_choice)
+  renderResult(data) {
+    const player1Choice = data.player_1_choice
+    const player2Choice = data.player_2_choice
+    const winner = data.winner
+
+    this.setPlayer1Choice(player1Choice)
+    this.setPlayer2Choice(player2Choice)
     this.setWinner(winner)
 
     this.showResult()
