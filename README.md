@@ -63,7 +63,7 @@ $ docker run -p 3000:3000 -d paper-rock-scissors
 
 ```bash
 # Start the system in debug mode, with hot-reloading enabled
-$ make debug
+$ npm run-script debug
 ```
 
 ## Code quality
