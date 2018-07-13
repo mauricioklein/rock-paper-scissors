@@ -2,7 +2,6 @@ const Helper = require("./helper")
 
 class Dom {
   constructor() {
-    console.log(this)
     this.optionsSelector = $("[id^=gameOption-]")
     this.player2 = {
       container: $("#player2-container"),
