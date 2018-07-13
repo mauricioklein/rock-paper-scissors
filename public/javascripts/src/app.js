@@ -3,8 +3,7 @@ const Dom = require("./dom")
 
 const dom = new Dom()
 
-// Player 1 options click handler
-dom.optionsSelector.on("click", (ev) => {
+const optionEventHandler = (ev) => {
   ApiProxy.call(dom.gameType, ev.target.value)
     .then(response => (
       response.json().then(json => (
@@ -13,9 +12,14 @@ dom.optionsSelector.on("click", (ev) => {
     ))
     .then(data => dom.renderResult(data))
     .catch(err => console.error("Error contacting API: ", err))
+}
+
+// Player 1 options click handler
+dom.optionsSelector.forEach(option => {
+  option.addEventListener("click", ev => optionEventHandler(ev))
 })
 
 // New game button handler
-dom.newGameButton.on("click", () => {
+dom.newGameButton.addEventListener("click", () => {
   dom.startNewGame()
 })
