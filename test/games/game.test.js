@@ -58,6 +58,15 @@ describe("Game", () => {
     })
   })
 
+  describe("#toString", () => {
+    it("should return an object with the game representation", () => {
+      expect(game.toString()).to.deep.equal({
+        type: null,
+        options: options
+      })
+    })
+  })
+
   describe("#randomChoice", () => {
     it("should return a valid option", () => {
       expect(options).to.include(game.randomChoice())

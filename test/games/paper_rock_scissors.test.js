@@ -43,6 +43,15 @@ describe("PaperRockScissors", () => {
     })
   })
 
+  describe("#toString", () => {
+    it("should return an object with the game representation", () => {
+      expect(game.toString()).to.deep.equal({
+        type: "paper-rock-scissors",
+        options: options
+      })
+    })
+  })
+
   describe("#randomChoice", () => {
     it("should return a valid option", () => {
       expect(options).to.include(game.randomChoice())
