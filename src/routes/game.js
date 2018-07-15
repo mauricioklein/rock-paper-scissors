@@ -31,11 +31,20 @@ const router = (app) => {
 
   route.get("/:gameType", (req, res) => {
     const { gameType } = req.params
-    const game = GameFactory.create(gameType)
 
+    const game = GameFactory.create(gameType)
     if(game === null) { return notFoundAsHtml(res, gameType) }
 
     res.render("index", { game: game })
+  })
+
+  route.get("/:gameType/description", (req, res) => {
+    const { gameType } = req.params
+
+    const game = GameFactory.create(gameType)
+    if(game === null) { return notFoundAsJson(res, gameType) }
+
+    res.json(game.toString())
   })
 }
 
