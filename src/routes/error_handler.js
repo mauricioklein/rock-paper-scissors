@@ -10,11 +10,8 @@ const notFoundAsJson = (response, gameType) => {
     )
 }
 
-const notFoundAsHtml = (response, gameType) => {
-  response
-    .render("error", {
-      message: `${gameType} isn't a valid game`
-    })
+const notFoundAsHtml = (res, gameType) => {
+  res.sendFile("error.html", { root: "views" })
 }
 
 module.exports = {
