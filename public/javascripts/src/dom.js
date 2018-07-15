@@ -1,18 +1,19 @@
+const Selector = require("./selector")
 const Helper = require("./helper")
 
 class Dom {
-  constructor() {
-    this.optionsSelector = document.querySelectorAll("[id^=gameOption-]")
-    this.player2 = {
-      container: document.querySelector("#player2-container"),
-      choice: document.querySelector("#player2-container > #choice")
-    }
-    this.result = {
-      container: document.querySelector("#result-container"),
-      winner: document.querySelector("#winner")
-    }
-    this.newGameButton = document.querySelector("#new-game")
-    this.gameType = document.querySelector("#gameType").value
+  initScreen(gameDescription, callback) {
+    const { type, options } = gameDescription
+
+    document.title = type
+    Selector.header.innerText = type
+    Selector.gameType.value = type
+
+    options.forEach(option => {
+      Selector.player1Container.appendChild(
+        Helper.createNodeOption(option, callback)
+      )
+    })
   }
 
   renderResult(data) {
@@ -34,31 +35,31 @@ class Dom {
 
   setPlayer1Choice(choice) {
     Array.prototype.filter
-      .call(this.optionsSelector, option => option.value !== choice)
+      .call(Selector.optionsSelector, option => option.value !== choice)
       .forEach(option => option.classList.add("hidden"))
   }
 
   setPlayer2Choice(choice) {
-    this.player2.choice.src = Helper.imgPath(choice)
+    Selector.player2Choice.src = Helper.imgPath(choice)
   }
 
   showOptions() {
-    this.optionsSelector
+    Selector.optionsSelector
       .forEach(option => option.classList.remove("hidden"))
   }
 
   setWinner(winner) {
-    this.result.winner.innerText = Helper.winnerLine(winner)
+    Selector.resultWinner.innerText = Helper.winnerLine(winner)
   }
 
   showResult() {
-    this.player2.container.classList.remove("hidden")
-    this.result.container.classList.remove("hidden")
+    Selector.player2Container.classList.remove("hidden")
+    Selector.resultContainer.classList.remove("hidden")
   }
 
   hideResult() {
-    this.player2.container.classList.add("hidden")
-    this.result.container.classList.add("hidden")
+    Selector.player2Container.classList.add("hidden")
+    Selector.resultContainer.classList.add("hidden")
   }
 }
 

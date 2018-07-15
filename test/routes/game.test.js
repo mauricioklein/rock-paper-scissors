@@ -30,6 +30,36 @@ describe("Routes", () => {
     })
   })
 
+  describe("GET /:gameType/description", () => {
+    const app = setupApp()
+
+    it("should get the description for paper-rock-scissors game", (done) => {
+      request(app)
+        .get("/game/paper-rock-scissors/description")
+        .expect(200, {
+          type: "paper-rock-scissors",
+          options: ["paper","rock","scissors"]
+        }, done)
+    })
+
+    it("should get the description for paper-rock-scissors-lizard-spock game", (done) => {
+      request(app)
+        .get("/game/paper-rock-scissors-lizard-spock/description")
+        .expect(200, {
+          type: "paper-rock-scissors-lizard-spock",
+          options: ["paper","rock","scissors", "lizard", "spock"]
+        }, done)
+    })
+
+    it("should return not found if the game type is unknown", (done) => {
+      request(app)
+        .get("/game/foobar/description")
+        .expect(404, {
+          error: "foobar isn't a valid game"
+        }, done)
+    })
+  })
+
   describe("POST /game/:algorithm", () => {
     const app = setupApp()
 

@@ -12,6 +12,13 @@ class ApiProxy {
       body: JSON.stringify(body)
     })
   }
+
+  static gameDescription(gameType) {
+    return fetch(`/game/${gameType}/description`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" }
+    })
+  }
 }
 
 Object.freeze(ApiProxy)

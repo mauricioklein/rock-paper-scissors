@@ -15,6 +15,25 @@ class Helper {
         return "Draw!"
     }
   }
+
+  static discoverGameType(path) {
+    const paths = path.split("/")
+    return paths[paths.length - 1]
+  }
+
+  static createNodeOption(optionName, callback) {
+    const node = document.createElement("input")
+
+    node.className = "option"
+    node.type = "image"
+    node.id = `gameOption-${optionName}`
+    node.src = `/images/game-options/${optionName}.png`
+    node.value = optionName
+
+    node.onclick = ev => callback(ev)
+
+    return node
+  }
 }
 
 Object.freeze(Helper)

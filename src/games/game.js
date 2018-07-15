@@ -13,6 +13,13 @@ class Game {
     return Object.keys(this.winningRules)
   }
 
+  toString() {
+    return {
+      type: this.type(),
+      options: this.getOptions()
+    }
+  }
+
   /**
    * Calculates the winner, based on the choice of both players
    *
