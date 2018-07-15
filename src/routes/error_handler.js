@@ -10,7 +10,7 @@ const notFoundAsJson = (response, gameType) => {
     )
 }
 
-const notFoundAsHtml = (res, gameType) => {
+const notFoundAsHtml = (res) => {
   res.sendFile("error.html", { root: "views" })
 }
 

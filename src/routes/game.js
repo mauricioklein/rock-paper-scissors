@@ -33,7 +33,7 @@ const router = (app) => {
     const { gameType } = req.params
 
     const game = GameFactory.create(gameType)
-    if(game === null) { return notFoundAsHtml(res, gameType) }
+    if(game === null) { return notFoundAsHtml(res) }
 
     res.sendFile("index.html", { root: "views" })
   })
