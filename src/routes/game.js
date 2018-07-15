@@ -35,7 +35,7 @@ const router = (app) => {
     const game = GameFactory.create(gameType)
     if(game === null) { return notFoundAsHtml(res, gameType) }
 
-    res.render("index", { game: game })
+    res.sendFile("index.html", { root: "views" })
   })
 
   route.get("/:gameType/description", (req, res) => {

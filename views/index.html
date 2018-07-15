@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+  </head>
+
+  <body>
+    <a href="/game/paper-rock-scissors">Go to <b>Paper Rock Scissors</b></a>
+    <br/>
+    <a href="/game/paper-rock-scissors-lizard-spock">Go to <b>Paper Rock Scissors Lizard Spock</b></a>
+
+    <h1 id="title"></h1>
+
+    <input id="gameType" value="" type="hidden"/>
+
+    <div class="row">
+      <!-- User choices section -->
+      <div id="player1-container" class="column center"></div>
+
+      <!-- Game result section -->
+      <div id="player2-container" class="column center hidden">
+        <img id="choice" src="/images/game-options/rock.png"/>
+      </div>
+    </div>
+
+    <div id="result-container" class="hidden">
+      <div class="row">
+        <p id="winner" class="bold report"/>
+      </div>
+
+      <div class="row">
+        <button id="new-game" class="bt report">New Game</button>
+      </div>
+    </div>
+
+    <!-- Minified modules -->
+    <script src="/javascripts/bundle.min.js"></script>
+  </body>
+</html>
