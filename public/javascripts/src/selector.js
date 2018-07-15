@@ -1,5 +1,5 @@
 class Selector {
-  static get title() { return document.querySelector("#title") }
+  static get header() { return document.querySelector("#header") }
 
   static get player1Container() { return document.querySelector("#player1-container") }
 

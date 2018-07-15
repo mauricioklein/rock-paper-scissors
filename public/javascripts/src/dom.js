@@ -5,7 +5,8 @@ class Dom {
   initScreen(gameDescription, callback) {
     const { type, options } = gameDescription
 
-    Selector.title.innerText = type
+    document.title = type
+    Selector.header.innerText = type
     Selector.gameType.value = type
 
     options.forEach(option => {
