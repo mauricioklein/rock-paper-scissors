@@ -5,7 +5,6 @@
  */
 
 const server = require('../server');
-const debug = require('debug')('rock-paper-scissors:server');
 const http = require('http');
 
 /**
@@ -78,5 +77,5 @@ function onListening() {
   const bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+  console.log('Listening on ' + bind);
 }
