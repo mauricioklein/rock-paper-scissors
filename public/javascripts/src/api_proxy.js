@@ -6,7 +6,7 @@ class ApiProxy {
       p2_choice: p2Choice
     }
 
-    return fetch(`/game/${gameType}`, {
+    return fetch(`/game/${gameType}/calculate`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body)
