@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-const server = require('../server');
+const Server = require('../server');
 const http = require('http');
 
 /**
@@ -13,9 +13,13 @@ const http = require('http');
 const port = normalizePort(process.env.PORT || '3000');
 
 /**
+ * Creates a new server
+ */
+const server = new Server()
+
+/**
  * Listen on provided port, on all network interfaces.
  */
-
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);

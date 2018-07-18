@@ -3,11 +3,15 @@ const path = require("path")
 const GameRouter = require("./src/routes/game")
 const middleware = require("./middleware")
 
-const server = http.createServer()
+const Server = function() {
+  const server = http.createServer()
 
-server.on("request", (req, res) => {
-  middleware.bodyParser(req, res, serve)
-})
+  server.on("request", (req, res) => {
+    middleware.bodyParser(req, res, serve)
+  })
+
+  return server
+}
 
 const serve = (req, res) => {
   const file = fileInfo(req)
@@ -76,4 +80,4 @@ const fileInfo = (req) => {
   }
 }
 
-module.exports = server
+module.exports = Server
