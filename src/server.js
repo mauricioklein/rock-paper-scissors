@@ -1,6 +1,4 @@
 const http = require("http")
-const path = require("path")
-const GameRouter = require("./routes/game")
 
 class Server {
   constructor(requestHandler) {
@@ -46,7 +44,7 @@ const middlewareChain = (funcs) => {
  * to the curried version of the next middleware
  */
 const curryNext = (funcs, index) => {
-  const next = (index === funcs.length - 1) ? (req, res) => {} : curryNext(funcs, index + 1)
+  const next = (index === funcs.length - 1) ? (_req, _res) => {} : curryNext(funcs, index + 1)
   return (req, res) => { funcs[index](req, res, next) }
 }
 

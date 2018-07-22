@@ -34,6 +34,12 @@
             "error",
             "never"
         ],
+        "no-unused-vars": [
+          "error",
+          {
+            "argsIgnorePattern": "^_"
+          }
+        ],
         "no-console": "off",
         "camelcase": [2, { "properties": "always" }],
         "filenames/match-regex": [2, "^[a-z_.]+$", true],
