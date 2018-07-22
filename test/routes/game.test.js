@@ -12,7 +12,7 @@ describe("Router", () => {
       Router.root(req, res)
 
       expect(res._headers).to.deep.equal({
-        Location: "game/paper-rock-scissors"
+        Location: "/game/paper-rock-scissors"
       })
       expect(res._isEndCalled()).to.equal(true)
 
@@ -26,7 +26,7 @@ describe("Router", () => {
 
       Router.getGameDescription("paper-rock-scissors", req, res)
 
-      expect(JSON.parse(res._getData())).to.deep.equal({
+      validateJson(res, {
         type: "paper-rock-scissors",
         options: ["paper","rock","scissors"]
       })
@@ -39,7 +39,7 @@ describe("Router", () => {
 
       Router.getGameDescription("paper-rock-scissors-lizard-spock", req, res)
 
-      expect(JSON.parse(res._getData())).to.deep.equal({
+      validateJson(res, {
         type: "paper-rock-scissors-lizard-spock",
         options: ["paper","rock","scissors", "lizard", "spock"]
       })
@@ -67,7 +67,7 @@ describe("Router", () => {
 
         Router.postGame("paper-rock-scissors", req, res)
 
-        expect(JSON.parse(res._getData())).to.deep.equal({
+        validateJson(res, {
           player_1_choice: "paper",
           player_2_choice: "rock",
           winner: "Player 1"
@@ -83,7 +83,7 @@ describe("Router", () => {
 
         Router.postGame("paper-rock-scissors", req, res)
 
-        expect(JSON.parse(res._getData())).to.deep.equal({
+        validateJson(res, {
           player_1_choice: "rock",
           player_2_choice: "paper",
           winner: "Player 2"
@@ -99,7 +99,7 @@ describe("Router", () => {
 
         Router.postGame("paper-rock-scissors", req, res)
 
-        expect(JSON.parse(res._getData())).to.deep.equal({
+        validateJson(res, {
           player_1_choice: "rock",
           player_2_choice: "rock",
           winner: "Draw"
@@ -156,6 +156,8 @@ describe("Router", () => {
 
           expect(options).to.include(body.player_1_choice)
           expect(body.player_2_choice).to.equal("rock")
+          expect(res._isEndCalled()).to.equal(true)
+          expect(res._isJSON()).to.equal(true)
 
           done()
         })
@@ -173,6 +175,8 @@ describe("Router", () => {
 
           expect(body.player_1_choice).to.equal("rock")
           expect(options).to.include(body.player_2_choice)
+          expect(res._isEndCalled()).to.equal(true)
+          expect(res._isJSON()).to.equal(true)
 
           done()
         })
@@ -180,3 +184,9 @@ describe("Router", () => {
     })
   })
 })
+
+const validateJson = (res, expectedJson) => {
+  expect(res._isEndCalled()).to.equal(true)
+  expect(res._isJSON()).to.equal(true)
+  expect(JSON.parse(res._getData())).to.deep.equal(expectedJson)
+}

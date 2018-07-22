@@ -10,7 +10,7 @@ const {
 
 class Router {
   static root(req, res) {
-    res.writeHead(302, { "Location": "game/paper-rock-scissors" })
+    res.writeHead(302, { "Location": "/game/paper-rock-scissors" })
     res.end()
   }
 
