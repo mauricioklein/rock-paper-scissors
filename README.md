@@ -26,8 +26,10 @@ This approach was used for security reasons (makes cheating harder), guarantees 
 - **Node app serves assets:**
 Node app is also responsible to serve the webpages and necessary assets. JS files that run in browser are minified using [Browserify](http://browserify.org/).
 
-- **Express is the only framework used:**
-This is due project restrictions. Thus, UI is build entirely using jQuery + CSS. As a more professional and scalable solution, some kind of reactive interface could be build, using React, VueJS, etc. Also, TypeScript in the backend would be a great improvement.
+- **No external frameworks used:**
+This is due project restrictions. Thus, UI is build entirely using plain JS DOM selectors. As a more professional and scalable solution, some kind of reactive interface could be build, using React, VueJS, etc. Also, TypeScript in the backend would be a great improvement.
+For the backend, Express and Pug support were removed from the original implementation in favour to
+regular HTTP server + vanilla JS to inject the values into the HTML template.
 
 - **Travis as CI and Codecov as code coverage reporter:**
 The project is connected to Travis.org. So, every build generates a new build, running the specs and lints.
@@ -75,6 +77,7 @@ $ npm run lint
 # Run the specs
 $ npm test
 ```
+
 
 ## Next steps
 
