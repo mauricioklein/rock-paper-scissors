@@ -8,7 +8,7 @@ WORKDIR /app
 EXPOSE 3000
 
 # Install the dependencies
-RUN ["npm", "install"]
+RUN ["npm", "install", "--production"]
 
 # Start the server on port 3000
 ENTRYPOINT ["npm", "start"]

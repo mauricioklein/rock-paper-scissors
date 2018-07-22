@@ -1,20 +1,19 @@
-const express = require("express")
 const GameFactory = require("../games/factory")
 const GamePresenter = require("../presenters/game")
-const { notFoundAsJson, notFoundAsHtml } = require("./error_handler")
+const {
+  render,
+  renderFile,
+  notFoundAsJson,
+  notFoundAsHtml
+} = require("./helpers")
 
-const router = (app) => {
-  const route = express.Router()
+class Router {
+  static root(req, res) {
+    res.writeHead(302, { "Location": "/game/paper-rock-scissors" })
+    res.end()
+  }
 
-  // Accessing root redirects to the default game
-  // (paper-rock-scissors)
-  app.get("/", (_, res) => res.redirect("/game/paper-rock-scissors"))
-
-  app.use("/game", route)
-
-  route.post("/:gameType", (req, res) => {
-    const { gameType } = req.params
-
+  static postGame(gameType, req, res) {
     const game = GameFactory.create(gameType)
 
     if(game === null) { return notFoundAsJson(res, gameType) }
@@ -25,27 +24,26 @@ const router = (app) => {
     const presenter = new GamePresenter(gameType, p1Choice, p2Choice)
     const response = (presenter.response || presenter.error)
 
-    res.setHeader("Content-Type", "application/json")
-    res.json(response)
-  })
+    render(res, JSON.stringify(response), "application/json")
+  }
 
-  route.get("/:gameType", (req, res) => {
-    const { gameType } = req.params
-
+  static getGame(gameType, req, res) {
     const game = GameFactory.create(gameType)
     if(game === null) { return notFoundAsHtml(res) }
 
-    res.sendFile("index.html", { root: "views" })
-  })
+    renderFile(res, "views/index.html")
+  }
 
-  route.get("/:gameType/description", (req, res) => {
-    const { gameType } = req.params
-
+  static getGameDescription(gameType, req, res) {
     const game = GameFactory.create(gameType)
     if(game === null) { return notFoundAsJson(res, gameType) }
 
-    res.json(game.toString())
-  })
+    render(res, JSON.stringify(game.toString()), "application/json")
+  }
+
+  static serveStatic(res, filePath, contentType) {
+    renderFile(res, `public/${filePath}`, contentType)
+  }
 }
 
-module.exports = router
+module.exports = Router

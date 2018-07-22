@@ -1,103 +1,112 @@
 /* eslint camelcase: off */
 
-const request = require("supertest")
-const express = require("express")
-const bodyParser = require("body-parser")
+const httpMocks = require("node-mocks-http")
+const { expect } = require("chai")
 
-const chai = require("chai")
-const gameRoutes = require("../../src/routes/game")
+const Router = require("../../src/routes/game")
 
-const { expect } = chai
-
-const setupApp = () => {
-  const app = express()
-  app.use(bodyParser.json())
-  app.use(bodyParser.urlencoded({ extended: true }))
-  gameRoutes(app)
-  return app
-}
-
-describe("Routes", () => {
-  describe("GET /", () => {
-    const app = setupApp()
+describe("Router", () => {
+  describe("#root", () => {
+    const { req, res } = httpMocks.createMocks()
 
     it("should redirect to paper-rock-scissors game", (done) => {
-      request(app)
-        .get("/")
-        .expect(302)
-        .expect("Location", "/game/paper-rock-scissors")
-        .end(done)
+      Router.root(req, res)
+
+      expect(res._headers).to.deep.equal({
+        Location: "/game/paper-rock-scissors"
+      })
+      expect(res._isEndCalled()).to.equal(true)
+
+      done()
     })
   })
 
-  describe("GET /:gameType/description", () => {
-    const app = setupApp()
-
+  describe("#getGameDescription", () => {
     it("should get the description for paper-rock-scissors game", (done) => {
-      request(app)
-        .get("/game/paper-rock-scissors/description")
-        .expect(200, {
-          type: "paper-rock-scissors",
-          options: ["paper","rock","scissors"]
-        }, done)
+      const { req, res } = httpMocks.createMocks()
+
+      Router.getGameDescription("paper-rock-scissors", req, res)
+
+      validateJson(res, {
+        type: "paper-rock-scissors",
+        options: ["paper","rock","scissors"]
+      })
+
+      done()
     })
 
     it("should get the description for paper-rock-scissors-lizard-spock game", (done) => {
-      request(app)
-        .get("/game/paper-rock-scissors-lizard-spock/description")
-        .expect(200, {
-          type: "paper-rock-scissors-lizard-spock",
-          options: ["paper","rock","scissors", "lizard", "spock"]
-        }, done)
+      const { req, res } = httpMocks.createMocks()
+
+      Router.getGameDescription("paper-rock-scissors-lizard-spock", req, res)
+
+      validateJson(res, {
+        type: "paper-rock-scissors-lizard-spock",
+        options: ["paper","rock","scissors", "lizard", "spock"]
+      })
+
+      done()
     })
 
     it("should return not found if the game type is unknown", (done) => {
-      request(app)
-        .get("/game/foobar/description")
-        .expect(404, {
-          error: "foobar isn't a valid game"
-        }, done)
+      const { req, res } = httpMocks.createMocks()
+
+      Router.getGameDescription("foobar", req, res)
+
+      expect(res.statusCode).to.equal(404)
+
+      done()
     })
   })
 
   describe("POST /game/:algorithm", () => {
-    const app = setupApp()
-
     describe("with valid game type", () => {
       it("should return valid response for player 1 win", (done) => {
-        request(app)
-          .post("/game/paper-rock-scissors")
-          .set("Content-Type", "application/json")
-          .send({p1_choice: "paper", p2_choice: "rock"})
-          .expect(200, {
-            player_1_choice: "paper",
-            player_2_choice: "rock",
-            winner: "Player 1"
-          }, done)
+        const { req, res } = httpMocks.createMocks({
+          body: { p1_choice: "paper", p2_choice: "rock" }
+        })
+
+        Router.postGame("paper-rock-scissors", req, res)
+
+        validateJson(res, {
+          player_1_choice: "paper",
+          player_2_choice: "rock",
+          winner: "Player 1"
+        })
+
+        done()
       })
 
       it("should return valid response for player 2 win", (done) => {
-        request(app)
-          .post("/game/paper-rock-scissors")
-          .set("Content-Type", "application/json")
-          .send({p1_choice: "rock", p2_choice: "paper"})
-          .expect(200, {
-            player_1_choice: "rock",
-            player_2_choice: "paper",
-            winner: "Player 2"
-          }, done)
+        const { req, res } = httpMocks.createMocks({
+          body: { p1_choice: "rock", p2_choice: "paper" }
+        })
+
+        Router.postGame("paper-rock-scissors", req, res)
+
+        validateJson(res, {
+          player_1_choice: "rock",
+          player_2_choice: "paper",
+          winner: "Player 2"
+        })
+
+        done()
       })
 
       it("should return valid response for draw", (done) => {
-        request(app)
-          .post("/game/paper-rock-scissors")
-          .set("Content-Type", "application/json")
-          .send({p1_choice: "rock", p2_choice: "rock"})
-          .expect(200, {
-            player_1_choice: "rock",
-            player_2_choice: "rock",
-            winner: "Draw"
-          }, done)
+        const { req, res } = httpMocks.createMocks({
+          body: { p1_choice: "rock", p2_choice: "rock" }
+        })
+
+        Router.postGame("paper-rock-scissors", req, res)
+
+        validateJson(res, {
+          player_1_choice: "rock",
+          player_2_choice: "rock",
+          winner: "Draw"
+        })
+
+        done()
       })
     })
 
@@ -106,25 +115,29 @@ describe("Routes", () => {
 
       describe("and both player choices are provided", () => {
         it("should return error", (done) => {
-          request(app)
-            .post(`/game/${gameType}`)
-            .set("Content-Type", "application/json")
-            .send({p1_choice: "rock", p2_choice: "rock"})
-            .expect(404, {
-              error: "foobar isn't a valid game"
-            }, done)
+          const { req, res } = httpMocks.createMocks({
+            body: { p1_choice: "rock", p2_choice: "rock" }
+          })
+
+          Router.postGame(gameType, req, res)
+
+          expect(res.statusCode).to.equal(404)
+
+          done()
         })
       })
 
       describe("and one of the player's choice is missing", () => {
         it("should return error", (done) => {
-          request(app)
-            .post(`/game/${gameType}`)
-            .set("Content-Type", "application/json")
-            .send({p1_choice: "rock", p2_choice: null})
-            .expect(404, {
-              error: "foobar isn't a valid game"
-            }, done)
+          const { req, res } = httpMocks.createMocks({
+            body: { p1_choice: "rock", p2_choice: null }
+          })
+
+          Router.postGame(gameType, req, res)
+
+          expect(res.statusCode).to.equal(404)
+
+          done()
         })
       })
     })
@@ -134,37 +147,47 @@ describe("Routes", () => {
 
       describe("and missing choice is from player 1", () => {
         it("should return a random option for player 1", (done) => {
-          request(app)
-            .post("/game/paper-rock-scissors")
-            .set("Content-Type", "application/json")
-            .send({p1_choice: null, p2_choice: "rock"})
-            .expect(200)
-            .expect((response) => {
-              const { player_1_choice, player_2_choice } = response.body
+          const { req, res } = httpMocks.createMocks({
+            body: { p1_choice: null, p2_choice: "rock" }
+          })
 
-              expect(options).to.include(player_1_choice)
-              expect(player_2_choice).to.equal("rock")
-            })
-            .end(done)
+          Router.postGame("paper-rock-scissors", req, res)
+
+          const body = JSON.parse(res._getData())
+
+          expect(options).to.include(body.player_1_choice)
+          expect(body.player_2_choice).to.equal("rock")
+          expect(res._isEndCalled()).to.equal(true)
+          expect(res._isJSON()).to.equal(true)
+
+          done()
         })
       })
 
       describe("and missing choice is from player 2", () => {
         it("should return a random option for player 2", (done) => {
-          request(app)
-            .post("/game/paper-rock-scissors")
-            .set("Content-Type", "application/json")
-            .send({p1_choice: "rock", p2_choice: null})
-            .expect(200)
-            .expect((response) => {
-              const { player_1_choice, player_2_choice } = response.body
+          const { req, res } = httpMocks.createMocks({
+            body: { p1_choice: "rock", p2_choice: null }
+          })
 
-              expect(player_1_choice).to.equal("rock")
-              expect(options).to.include(player_2_choice)
-            })
-            .end(done)
+          Router.postGame("paper-rock-scissors", req, res)
+
+          const body = JSON.parse(res._getData())
+
+          expect(body.player_1_choice).to.equal("rock")
+          expect(options).to.include(body.player_2_choice)
+          expect(res._isEndCalled()).to.equal(true)
+          expect(res._isJSON()).to.equal(true)
+
+          done()
         })
       })
     })
   })
 })
+
+const validateJson = (res, expectedJson) => {
+  expect(res._isEndCalled()).to.equal(true)
+  expect(res._isJSON()).to.equal(true)
+  expect(JSON.parse(res._getData())).to.deep.equal(expectedJson)
+}
