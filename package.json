@@ -5,7 +5,7 @@
   "scripts": {
     "prestart": "browserify public/javascripts/src/app.js | uglifyjs -cm -o public/javascripts/bundle.min.js",
     "lint": "eslint --ignore-pattern '*.min.js' --ignore-pattern 'coverage/**/*' .",
-    "test": "mocha test/**/*.js",
+    "test": "mocha --recursive test/",
     "debug": "DEBUG=rock-paper-scissors:* npm start",
     "start": "node ./bin/www"
   },
