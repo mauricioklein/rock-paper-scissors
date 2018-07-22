@@ -32,15 +32,19 @@ class Server {
   }
 }
 
-// middlewareChain chain the middleware functions, passing
-// the next function in the chain as the "next" parameter of the
-// previous function
+/**
+ * middlewareChain chain the middleware functions, passing
+ * the next function in the chain as the "next" parameter of the
+ * previous function
+ */
 const middlewareChain = (funcs) => {
   return curryNext(funcs, 0)
 }
 
-// curryNext is a recursive function that chains the current middleware
-// to the curried version of the next middleware
+/**
+ * curryNext is a recursive function that chains the current middleware
+ * to the curried version of the next middleware
+ */
 const curryNext = (funcs, index) => {
   const next = (index === funcs.length - 1) ? (req, res) => {} : curryNext(funcs, index + 1)
   return (req, res) => { funcs[index](req, res, next) }
