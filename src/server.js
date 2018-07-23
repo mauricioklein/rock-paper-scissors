@@ -44,8 +44,13 @@ const middlewareChain = (funcs) => {
  * to the curried version of the next middleware
  */
 const curryNext = (funcs, index) => {
-  const next = (index === funcs.length - 1) ? (_req, _res) => {} : curryNext(funcs, index + 1)
-  return (req, res) => { funcs[index](req, res, next) }
+  if(index === funcs.length) {
+    return (_req, _res) => {}
+  }
+
+  return (req, res) => {
+    funcs[index](req, res, curryNext(funcs, index + 1))
+  }
 }
 
 module.exports = Server
